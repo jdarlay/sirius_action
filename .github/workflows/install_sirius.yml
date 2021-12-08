@@ -6,8 +6,6 @@ jobs:
   cmake:
     runs-on: ubuntu-latest
     steps:
-      - name: githubworkspace
-        run: echo ${{ github.workspace }}/sirius-solver/SiriusInstall ; exit 1
       - name: Checkout Sirius repo
         uses: actions/checkout@v2
         with:
@@ -24,6 +22,12 @@ jobs:
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target install -j14
+      - name: githubworkspace
+        working-directory: ./sirius-solver
+        run: |
+          echo ${{ github.workspace }}/sirius-solver/SiriusInstall
+          realpath ../sirius-solver/SiriusInstall
+          exit 1
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:

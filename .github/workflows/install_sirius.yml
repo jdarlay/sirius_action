@@ -1,0 +1,15 @@
+name: Install Sirius
+
+on: workflow_dispatch
+
+jobs:
+  cmake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Sirius repo
+        uses: actions/checkout@v2
+        with:
+          repository: rte-france/sirius-solver
+          path: './sirius-solver'
+      - name: Tree
+        run: tree -L 2 .

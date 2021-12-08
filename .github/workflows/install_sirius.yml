@@ -4,14 +4,14 @@ on: workflow_dispatch
 
 jobs:
   cmake:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Sirius repo
         uses: actions/checkout@v2
         with:
           repository: rte-france/sirius-solver
           path: ./sirius-solver
-          ref: master
+          ref: antares_integration
       - name: Configure Sirius
         working-directory: ./sirius-solver
         run: |
@@ -22,9 +22,6 @@ jobs:
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target install -j14
-      - name: Tree
-        working-directory: ./sirius-solver/SiriusInstall
-        run: tree . && exit 1
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:

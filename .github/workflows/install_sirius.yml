@@ -17,7 +17,7 @@ jobs:
         run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=SiriusInstall -B build -S src
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
-        run: cmake -j14 --build build/ --config Release --target install
+        run: cmake --build build/ --config Release --target install -j14
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:
@@ -27,4 +27,4 @@ jobs:
       - name: Configure or-tools
         working-directory: ./or-tools
         shell: bash
-        run: cmake -j14 -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR=$(realpath ../sirius-solver/SiriusInstall)
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR=$(realpath ../sirius-solver/SiriusInstall) -j14

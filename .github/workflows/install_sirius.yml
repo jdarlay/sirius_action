@@ -10,6 +10,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: rte-france/sirius-solver
-          path: './sirius-solver'
+          path: ./sirius-solver
+          ref: master
+      - name: Configure Sirius
+        working-directory: ./sirius-solver
+        run: cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=SiriusInstall -B build -S src
+      - name: Build & Install Sirius
+        working-directory: ./sirius-solver
+        run: cmake --build build/ --config Release --target install
       - name: Tree
         run: tree -L 2 .

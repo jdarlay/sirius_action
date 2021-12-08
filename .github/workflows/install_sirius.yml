@@ -47,6 +47,6 @@ jobs:
                 -j14
       - name: Run tests
         working-directory: ./or-tools/build
-        run: ctest -V -R 'cxx_unittests_.*'
+        run: ctest -V -R cxx_unittests_sirius_interface
         env:
           LD_LIBRARY_PATH: ${{ github.workspace }}/sirius-solver/SiriusInstall/lib/

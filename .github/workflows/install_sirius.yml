@@ -14,10 +14,11 @@ jobs:
           ref: master
       - name: Configure Sirius
         working-directory: ./sirius-solver
-        run: cmake -S src \
-                   -B build \
-                   -DCMAKE_BUILD_TYPE=Release \
-                   -DCMAKE_INSTALL_PREFIX=SiriusInstall
+        run: |
+          cmake -S src \
+                -B build \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=SiriusInstall
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target install -j14
@@ -30,19 +31,21 @@ jobs:
       - name: Configure or-tools
         working-directory: ./or-tools
         shell: bash
-        run: cmake -S. \
-                   -Bbuild \
-                   -DCMAKE_BUILD_TYPE=Release \
-                   -DBUILD_DEPS=ON \
-                   -DUSE_SIRIUS=ON \
-                   -Dsirius_solver_DIR=$(realpath ../sirius-solver/SiriusInstall) \
-                   -DBUILD_LINEAR_SOLVER_UNITTESTS=ON \
-                   -DBUILD_TESTING=ON
+        run: |
+          cmake -S. \
+                -Bbuild \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DBUILD_DEPS=ON \
+                -DUSE_SIRIUS=ON \
+                -Dsirius_solver_DIR=$(realpath ../sirius-solver/SiriusInstall) \
+                -DBUILD_LINEAR_SOLVER_UNITTESTS=ON \
+                -DBUILD_TESTING=ON
       - name: Build tests
         working-directory: ./or-tools
-        run: cmake --build build \
-                   --targets sirius_interface \
-                   -j14
+        run: |
+          cmake --build build \
+                --targets sirius_interface \
+                -j14
       - name: Run tests
         working-directory: ./or-tools/build
         run: ctest -V -R 'cxx_unittests_.*'

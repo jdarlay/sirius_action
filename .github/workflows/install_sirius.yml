@@ -30,7 +30,6 @@ jobs:
           ref: rte_dev_ls_unittest
       - name: Configure or-tools
         working-directory: ./or-tools
-        shell: bash
         run: |
           cmake -S. \
                 -Bbuild \
@@ -49,3 +48,5 @@ jobs:
       - name: Run tests
         working-directory: ./or-tools/build
         run: ctest -V -R 'cxx_unittests_.*'
+        env:
+          LD_LIBRARY_PATH: ${{ github.workspace }}/sirius-solver/SiriusInstall/lib/

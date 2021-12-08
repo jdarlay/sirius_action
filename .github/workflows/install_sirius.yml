@@ -44,7 +44,7 @@ jobs:
         working-directory: ./or-tools
         run: |
           cmake --build build \
-                --targets sirius_interface \
+                --target sirius_interface \
                 -j14
       - name: Run tests
         working-directory: ./or-tools/build

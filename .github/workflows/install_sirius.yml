@@ -6,6 +6,8 @@ jobs:
   cmake:
     runs-on: ubuntu-latest
     steps:
+      - name: cmake
+        run: cmake --version && exit 1
       - name: Checkout Sirius repo
         uses: actions/checkout@v2
         with:

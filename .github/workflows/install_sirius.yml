@@ -22,38 +22,41 @@ jobs:
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target install -j14
-      - name: Archive lib
+      - name: Create link
+        working-directory: ./sirius-solver/SiriusInstall/lib/
+        run: ln -s libsirius_solver.so libsirius_solver_link.so
+      - name: Archive link lib
         uses: actions/upload-artifact@v2
         with:
-          name: libsirius_solver
-          path: ./sirius-solver/SiriusInstall/lib/libsirius_solver.so
-      - name: exit 1
-        run: exit 1
-      - name: Checkout or-tools
-        uses: actions/checkout@v2
-        with:
-          repository: jdarlay/or-tools
-          path: ./or-tools
-          ref: rte_dev_ls_unittest
-      - name: Configure or-tools
-        working-directory: ./or-tools
-        run: |
-          cmake -S. \
-                -Bbuild \
-                -DCMAKE_BUILD_TYPE=Release \
-                -DBUILD_DEPS=ON \
-                -DUSE_SIRIUS=ON \
-                -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" \
-                -DBUILD_LINEAR_SOLVER_UNITTESTS=ON \
-                -DBUILD_TESTING=ON
-      - name: Build tests
-        working-directory: ./or-tools
-        run: |
-          cmake --build build \
-                --target sirius_interface \
-                -j14
-      - name: Run tests
-        working-directory: ./or-tools/build
-        run: ctest -V -R cxx_unittests_sirius_interface
-        env:
-          LD_LIBRARY_PATH: ${{ github.workspace }}/sirius-solver/SiriusInstall/lib/
+          name: libsirius_solver_link
+          path: ./sirius-solver/SiriusInstall/lib/libsirius_solver_link.so
+      # - name: exit 1
+      #   run: exit 1
+      # - name: Checkout or-tools
+      #   uses: actions/checkout@v2
+      #   with:
+      #     repository: jdarlay/or-tools
+      #     path: ./or-tools
+      #     ref: rte_dev_ls_unittest
+      # - name: Configure or-tools
+      #   working-directory: ./or-tools
+      #   run: |
+      #     cmake -S. \
+      #           -Bbuild \
+      #           -DCMAKE_BUILD_TYPE=Release \
+      #           -DBUILD_DEPS=ON \
+      #           -DUSE_SIRIUS=ON \
+      #           -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" \
+      #           -DBUILD_LINEAR_SOLVER_UNITTESTS=ON \
+      #           -DBUILD_TESTING=ON
+      # - name: Build tests
+      #   working-directory: ./or-tools
+      #   run: |
+      #     cmake --build build \
+      #           --target sirius_interface \
+      #           -j14
+      # - name: Run tests
+      #   working-directory: ./or-tools/build
+      #   run: ctest -V -R cxx_unittests_sirius_interface
+      #   env:
+      #     LD_LIBRARY_PATH: ${{ github.workspace }}/sirius-solver/SiriusInstall/lib/

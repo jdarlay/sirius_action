@@ -1,0 +1,15 @@
+name: Checkout private repo
+
+on: workflow_dispatch
+
+jobs:
+  cmake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v2
+        with:
+          repository: jdarlay/private_repo_test
+          path: ./private_repo_test
+      - name: tree
+        run: tree ./private_repo_test

@@ -12,5 +12,6 @@ jobs:
           repository: jdarlay/private_repo_test
           path: ./private_repo_test
           ref: main
+          token: ${{ secrets.ACCESS_TOKEN }}
       - name: tree
         run: tree ./private_repo_test

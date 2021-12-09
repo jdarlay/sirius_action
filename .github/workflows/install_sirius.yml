@@ -22,6 +22,13 @@ jobs:
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target install -j14
+      - name: Archive lib
+        uses: actions/upload-artifact@v2
+        with:
+          name: libsirius_solver
+          path: ./sirius-solver/SiriusInstall/lib/libsirius_solver.so
+      - name: exit 1
+        run: exit 1
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:

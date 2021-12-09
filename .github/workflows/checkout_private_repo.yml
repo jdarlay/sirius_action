@@ -11,5 +11,6 @@ jobs:
         with:
           repository: jdarlay/private_repo_test
           path: ./private_repo_test
+          ref: main
       - name: tree
         run: tree ./private_repo_test

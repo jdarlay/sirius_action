@@ -47,6 +47,7 @@ jobs:
                 -DUSE_XPRESS=ON \
                 -DUSE_XPRESS=ON \
                 -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" \
+                -DBUILD_PYTHON=ON \
                 -DBUILD_TESTING=ON
       - name: Build tests
         working-directory: ./or-tools
@@ -54,9 +55,15 @@ jobs:
           cmake --build build \
                 --target sirius_interface \
                          xpress_interface \
+                         python_package \
                 -j14
-      - name: Run tests
+      - name: Run interface tests
         working-directory: ./or-tools/build
         run: ctest -V -R 'cxx_unittests_*'
+        env:
+          LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
+      - name: Run python tests
+        working-directory: ./or-tools/build
+        run: ctest -V -R python_python_linear_programming
         env:
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"

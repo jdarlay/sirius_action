@@ -1,0 +1,32 @@
+name: CMake Windows
+
+on: workflow_dispatch
+
+jobs:
+  cmake:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Sirius repo
+        uses: actions/checkout@v2
+        with:
+          repository: rte-france/sirius-solver
+          path: ./sirius-solver
+          ref: antares_integration
+      - name: Configure Sirius
+        working-directory: ./sirius-solver
+        run: |
+          cmake -S src \
+                -B build \
+                -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_INSTALL_PREFIX=SiriusInstall \
+                -G "Visual Studio 16 2019" \
+                -v \
+                -- /maxcpucount
+      - name: Build & Install Sirius
+        working-directory: ./sirius-solver
+        run: |
+          cmake --build build/ \
+                --config Release \
+                --target INSTALL \
+                -v \
+                -- /maxcpucount

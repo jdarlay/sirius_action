@@ -6,21 +6,6 @@ jobs:
   cmake:
     runs-on: windows-latest
     steps:
-      - name: Setup python 3.10
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
-      - name: Pip install reqs
-        run: python3 -m pip install --user mypy-protobuf absl-py setuptools wheel numpy pandas
-      - name: Install SWIG 4.0.2
-        run: |
-          (New-Object System.Net.WebClient).DownloadFile("http://prdownloads.sourceforge.net/swig/swigwin-4.0.2.zip","swigwin-4.0.2.zip");
-          Expand-Archive .\swigwin-4.0.2.zip .;
-          echo "$((Get-Item .).FullName)/swigwin-4.0.2" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-      - name: Check swig
-        run: swig -version
-      - name: Add Python binaries to path
-        run: echo "$((Get-Item ~).FullName)/AppData/Roaming/Python/Python310/Scripts" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - name: Checkout Sirius repo
         uses: actions/checkout@v2
         with:
@@ -34,7 +19,7 @@ jobs:
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target INSTALL -- /maxcpucount
       - name: Add Sirius lib to path
-        run: echo "${{ github.workspace }}/sirius-solver/SiriusInstall/lib" >> $GITHUB_PATH
+        run: echo "${{ github.workspace }}\sirius-solver\SiriusInstall\lib" >> $GITHUB_PATH
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:
@@ -43,20 +28,15 @@ jobs:
           ref: rte_dev_ls_unittest
       - name: Configure or-tools
         working-directory: ./or-tools
-        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DBUILD_PYTHON=ON -DBUILD_TESTING=ON
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DBUILD_TESTING=ON
       - name: Build tests
         working-directory: ./or-tools
-        run: cmake --build build --target sirius_interface python_package -- /maxcpucount
+        run: cmake --build build --target sirius_interface -- /maxcpucount
       - name: Upload libortools
         uses: actions/upload-artifact@v2
         with:
           name: libortools
           path: ./or-tools/build/lib/ortools.lib
-      - name: Upload ortools wheel
-        uses: actions/upload-artifact@v2
-        with:
-          name: ortools_wheel
-          path: './or-tools/build/python/dist/*.whl'
       - name: Run interface tests
         working-directory: ./or-tools/build
         run: ctest -V -R 'cxx_unittests_sirius_interface'

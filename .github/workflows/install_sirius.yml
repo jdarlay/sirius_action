@@ -66,7 +66,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ortools_wheel
-          path: ./or-tools/build/python/dist/ortools-9.1.9587-cp39-cp39-linux_x86_64.whl
+          path: './or-tools/build/python/dist/*.whl'
       - name: Run interface tests
         working-directory: ./or-tools/build
         run: ctest -V -R 'cxx_unittests_*'

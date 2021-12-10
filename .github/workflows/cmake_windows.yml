@@ -18,6 +18,8 @@ jobs:
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target INSTALL -- /maxcpucount
+      - name: Add Sirius lib to path
+        run: echo "${{ github.workspace }}/sirius-solver/SiriusInstall/lib" >> $GITHUB_PATH
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:

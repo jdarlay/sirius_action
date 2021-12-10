@@ -18,3 +18,28 @@ jobs:
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target INSTALL -- /maxcpucount
+      - name: Checkout or-tools
+        uses: actions/checkout@v2
+        with:
+          repository: jdarlay/or-tools
+          path: ./or-tools
+          ref: rte_dev_ls_unittest
+      - name: Configure or-tools
+        working-directory: ./or-tools
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DBUILD_PYTHON=ON -DBUILD_TESTING=ON
+      - name: Build tests
+        working-directory: ./or-tools
+        run: cmake --build build --target sirius_interface python_package -- /maxcpucount
+      - name: Upload libortools
+        uses: actions/upload-artifact@v2
+        with:
+          name: libortools
+          path: ./or-tools/build/lib/ortools.lib
+      - name: Upload ortools wheel
+        uses: actions/upload-artifact@v2
+        with:
+          name: ortools_wheel
+          path: './or-tools/build/python/dist/*.whl'
+      - name: Run interface tests
+        working-directory: ./or-tools/build
+        run: ctest -V -R 'cxx_unittests_sirius_interface'

@@ -57,6 +57,16 @@ jobs:
                          xpress_interface \
                          python_package \
                 -j14
+      - name: Upload libortools
+        uses: actions/upload-artifact@v2
+        with:
+          name: libortools
+          path: ./or-tools/build/lib/libortools.so
+      - name: Upload ortools wheel
+        uses: actions/upload-artifact@v2
+        with:
+          name: ortools_wheel
+          path: ./or-tools/build/python/dist/ortools-9.1.9587-cp39-cp39-linux_x86_64.whl
       - name: Run interface tests
         working-directory: ./or-tools/build
         run: ctest -V -R 'cxx_unittests_*'
@@ -64,6 +74,6 @@ jobs:
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
       - name: Run python tests
         working-directory: ./or-tools/build
-        run: ctest -V -R python_python_linear_programming
+        run: ctest -V -R python_python_linear_programming_sirius_xpress
         env:
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"

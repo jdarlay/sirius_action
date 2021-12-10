@@ -39,4 +39,4 @@ jobs:
           path: ./or-tools/build/lib/ortools.lib
       - name: Run interface tests
         working-directory: ./or-tools/build
-        run: ctest -V -R 'cxx_unittests_sirius_interface'
+        run: ctest -V -C Release -R 'cxx_unittests_sirius_interface'

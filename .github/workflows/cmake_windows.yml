@@ -20,8 +20,7 @@ jobs:
                 -DCMAKE_BUILD_TYPE=Release \
                 -DCMAKE_INSTALL_PREFIX=SiriusInstall \
                 -G "Visual Studio 16 2019" \
-                -v \
-                -- /maxcpucount
+                -v
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: |

@@ -20,6 +20,8 @@ jobs:
         run: cmake --build build/ --config Release --target INSTALL -- /maxcpucount
       - name: Add Sirius bin to path
         run: echo "${{ github.workspace }}\sirius-solver\SiriusInstall\bin" >> $GITHUB_PATH
+      - name: dumpbintest
+        run: dumpbin /dependents "${{ github.workspace }}\sirius-solver\SiriusInstall\bin\sirius_solver.dll"
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:

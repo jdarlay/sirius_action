@@ -24,6 +24,7 @@ jobs:
           name: sirius_solver.dll
           path: ./sirius-solver/SiriusInstall/bin/sirius_solver.dll
       - name: Add Sirius bin to path
+        shell: bash
         run: echo "${{ github.workspace }}\sirius-solver\SiriusInstall\bin" >> $GITHUB_PATH
       - name: dumpbintest
         run: |

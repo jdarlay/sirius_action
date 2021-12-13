@@ -18,8 +18,8 @@ jobs:
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target INSTALL -- /maxcpucount
-      - name: Add Sirius lib to path
-        run: echo "${{ github.workspace }}\sirius-solver\SiriusInstall\lib" >> $GITHUB_PATH
+      - name: Add Sirius bin to path
+        run: echo "${{ github.workspace }}\sirius-solver\SiriusInstall\bin" >> $GITHUB_PATH
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:
@@ -31,12 +31,12 @@ jobs:
         run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DBUILD_TESTING=ON
       - name: Build tests
         working-directory: ./or-tools
-        run: cmake --build build -DCMAKE_BUILD_TYPE=Release --target sirius_interface -- /maxcpucount
+        run: cmake --build build --config Release --target sirius_interface -- /maxcpucount
       - name: Upload libortools
         uses: actions/upload-artifact@v2
         with:
           name: libortools
-          path: ./or-tools/build/lib/ortools.lib
+          path: ./or-tools/build/RELEASE/bin/ortools.lib
       - name: Run interface tests
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R 'cxx_unittests_sirius_interface'

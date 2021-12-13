@@ -49,7 +49,7 @@ jobs:
           ref: rte_dev_ls_unittest
       - name: Configure or-tools
         working-directory: ./or-tools
-        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DBUILD_PYTHON=ON -DBUILD_TESTING=ON
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DBUILD_PYTHON=ON -DBUILD_TESTING=ON -DBUILD_CXX_SAMPLES=OFF -DBUILD_CXX_EXAMPLES=OFF
       - name: Build tests
         working-directory: ./or-tools
         run: cmake --build build --config Release --target ALL_BUILD -v -- /maxcpucount

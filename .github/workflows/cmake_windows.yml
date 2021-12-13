@@ -18,6 +18,11 @@ jobs:
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target INSTALL -- /maxcpucount
+      - name: Upload sirius dll
+        uses: actions/upload-artifact@v2
+        with:
+          name: sirius_solver.dll
+          path: ./sirius-solver/SiriusInstall/bin/sirius_solver.dll
       - name: Add Sirius bin to path
         run: echo "${{ github.workspace }}\sirius-solver\SiriusInstall\bin" >> $GITHUB_PATH
       - name: dumpbintest

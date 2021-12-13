@@ -21,7 +21,8 @@ jobs:
       - name: Add Sirius bin to path
         run: echo "${{ github.workspace }}\sirius-solver\SiriusInstall\bin" >> $GITHUB_PATH
       - name: dumpbintest
-        run: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/dumpbin.exe" /dependents "${{ github.workspace }}\sirius-solver\SiriusInstall\bin\sirius_solver.dll"
+        run: |
+          "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/dumpbin.exe" /dependents "${{ github.workspace }}\sirius-solver\SiriusInstall\bin\sirius_solver.dll"
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:

@@ -31,7 +31,7 @@ jobs:
         run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DBUILD_TESTING=ON
       - name: Build tests
         working-directory: ./or-tools
-        run: cmake --build build --target sirius_interface -- /maxcpucount
+        run: cmake --build build -DCMAKE_BUILD_TYPE=Release --target sirius_interface -- /maxcpucount
       - name: Upload libortools
         uses: actions/upload-artifact@v2
         with:

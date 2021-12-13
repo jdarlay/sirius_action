@@ -37,6 +37,11 @@ jobs:
         with:
           name: libortools
           path: ./or-tools/build/RELEASE/bin/ortools.lib
+      - name: Upload test
+        uses: actions/upload-artifact@v2
+        with:
+          name: sirius_interface.exe
+          path: ./or-tools/build/RELEASE/bin/sirius_interface.exe
       - name: Run interface tests
         working-directory: ./or-tools/build
-        run: ctest -V -C Release -R 'cxx_unittests_sirius_interface'
+        run: ctest -VV -C Release -R 'cxx_unittests_sirius_interface'

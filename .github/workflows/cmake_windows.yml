@@ -44,6 +44,8 @@ jobs:
         with:
           name: sirius_interface.exe
           path: ./or-tools/build/RELEASE/bin/sirius_interface.exe
+      - name: dumpbin ./or-tools/build/RELEASE/bin/sirius_interface.exe
+        run: dumpbin /dependents "${{ github.workspace }}\or-tools\build\RELEASE\bin\sirius_interface.exe"
       - name: Run interface tests
         working-directory: ./or-tools/build
         run: ctest -VV -C Release -R 'cxx_unittests_sirius_interface'

@@ -58,6 +58,7 @@ jobs:
                          xpress_interface \
                          python_package \
                          java_package \
+                         java_example_LinearProgramming \
                 -j14
       - name: Upload libortools
         uses: actions/upload-artifact@v2
@@ -69,6 +70,11 @@ jobs:
         with:
           name: ortools_wheel
           path: './or-tools/build/python/dist/*.whl'
+      - name: Upload ortools jar
+        uses: actions/upload-artifact@v2
+        with:
+          name: ortools_jar
+          path: './or-tools/build/java/ortools-java/target/*.jar'
       - name: Run interface tests
         working-directory: ./or-tools/build
         run: ctest -V -R 'cxx_unittests_*'

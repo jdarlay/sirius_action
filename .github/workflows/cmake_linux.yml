@@ -101,3 +101,8 @@ jobs:
         run: ctest -V -R java_java_LinearProgramming
         env:
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
+      - name: Run dotnet tests
+        working-directory: ./or-tools/build
+        run: ctest -V -R dotnet_dotnet_cslinearprogramming
+        env:
+          LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"

@@ -68,4 +68,4 @@ jobs:
         run: ctest -V -C Release -R 'cxx_unittests_sirius_interface'
       - name: Run pyton tests
         working-directory: ./or-tools/build
-        run: ctest -V -R python_python_linear_programming_sirius
+        run: ctest -V -C Release -R python_python_linear_programming_sirius

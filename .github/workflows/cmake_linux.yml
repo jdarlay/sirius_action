@@ -49,6 +49,7 @@ jobs:
                 -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" \
                 -DBUILD_PYTHON=ON \
                 -DBUILD_JAVA=ON \
+                -DBUILD_DOTNET=ON \
                 -DBUILD_TESTING=ON
       - name: Build tests
         working-directory: ./or-tools
@@ -59,6 +60,8 @@ jobs:
                          python_package \
                          java_package \
                          java_example_LinearProgramming \
+                         dotnet_package \
+                         dotnet_example_cslinearprogramming \
                 -j14
       - name: Upload libortools
         uses: actions/upload-artifact@v2

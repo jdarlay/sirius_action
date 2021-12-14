@@ -6,6 +6,13 @@ jobs:
   cmake:
     runs-on: windows-latest
     steps:
+      - name: Install VcRedist 2019
+        run: |
+          Install-Module -Name VcRedist -Force
+          New-Item -Path C:\Temp\VcRedist -ItemType Directory
+          $VcList = Get-VcList -Release "2019"
+          Save-VcRedist -VcList $VcList -Path C:\Temp\VcRedist
+          Install-VcRedist -Path C:\Temp\VcRedist -VcList $VcList -Silent
       - name: Setup python 3.10
         uses: actions/setup-python@v2
         with:

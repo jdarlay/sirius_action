@@ -48,6 +48,7 @@ jobs:
                 -DUSE_XPRESS=ON \
                 -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" \
                 -DBUILD_PYTHON=ON \
+                -DBUILD_JAVA=ON \
                 -DBUILD_TESTING=ON
       - name: Build tests
         working-directory: ./or-tools
@@ -56,6 +57,7 @@ jobs:
                 --target sirius_interface \
                          xpress_interface \
                          python_package \
+                         java_package \
                 -j14
       - name: Upload libortools
         uses: actions/upload-artifact@v2
@@ -75,5 +77,10 @@ jobs:
       - name: Run python tests
         working-directory: ./or-tools/build
         run: ctest -V -R python_python_linear_programming_sirius_xpress
+        env:
+          LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
+      - name: Run java tests
+        working-directory: ./or-tools/build
+        run: ctest -V -R java_java_LinearProgramming
         env:
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"

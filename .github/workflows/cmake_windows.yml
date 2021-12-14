@@ -12,9 +12,11 @@ jobs:
           repository: rte-france/sirius-solver
           path: ./sirius-solver
           ref: antares_integration
+      - name: cmake help
+        run: cmake --help
       - name: Configure Sirius
         working-directory: ./sirius-solver
-        run: cmake -Ssrc -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=SiriusInstall -G "Visual Studio 17 2022"
+        run: cmake -Ssrc -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=SiriusInstall -G "Visual Studio 16 2019"
       - name: Build & Install Sirius
         working-directory: ./sirius-solver
         run: cmake --build build/ --config Release --target INSTALL -- /maxcpucount
@@ -31,10 +33,10 @@ jobs:
         with:
           repository: jdarlay/or-tools
           path: ./or-tools
-          ref: rte_dev_ls_cmake_windows_python
+          ref: rte_dev_ls_unittest
       - name: Configure or-tools
         working-directory: ./or-tools
-        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 17 2022" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake"
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake"
       - name: Build tests
         working-directory: ./or-tools
         run: cmake --build build --config Release --target sirius_interface -v -- /maxcpucount

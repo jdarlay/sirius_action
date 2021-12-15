@@ -70,5 +70,5 @@ jobs:
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R python_python_linear_programming_sirius_xpress
         env:
-          SIRIUS_BIN_BIN: "${{ github.workspace }}/sirius-solver/SiriusInstall/bin"
-          XPRESS_BIN_BIN: "${{ github.workspace }}/xpressmp813/bin"
+          SIRIUS_BIN_DIR: "${{ github.workspace }}/sirius-solver/SiriusInstall/bin"
+          XPRESS_BIN_DIR: "${{ github.workspace }}/xpressmp813/bin"

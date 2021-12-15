@@ -35,6 +35,9 @@ jobs:
           path: ./xpressmp813
           ref: master
           token: ${{ secrets.ACCESS_TOKEN }}
+      - name: Add xpress bin to path
+        shell: bash
+        run: echo "${{ github.workspace }}\xpressmp813\bin" >> $GITHUB_PATH
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:

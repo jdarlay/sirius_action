@@ -6,14 +6,14 @@ jobs:
   cmake:
     runs-on: windows-latest
     steps:
-      - name: Setup python 3.6
+      - name: Setup python 3.10
         uses: actions/setup-python@v2
         with:
-          python-version: '3.6'
+          python-version: '3.10'
       - name: Pip install reqs
         run: python3 -m pip install --user mypy-protobuf absl-py setuptools wheel numpy pandas virtualenv
       - name: Add Python binaries to path
-        run: echo "$((Get-Item ~).FullName)/AppData/Roaming/Python/Python36/Scripts" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        run: echo "$((Get-Item ~).FullName)/AppData/Roaming/Python/Python310/Scripts" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - name: Checkout Sirius repo
         uses: actions/checkout@v2
         with:
@@ -69,3 +69,6 @@ jobs:
       - name: Run python tests
         working-directory: ./or-tools/build
         run: ctest -V -R python_python_linear_programming_sirius_xpress
+        env:
+          SIRIUS_BIN_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/bin"
+          XPRESS_BIN_PATH: "${{ github.workspace }}/xpressmp813/bin"

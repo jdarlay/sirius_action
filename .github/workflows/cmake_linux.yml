@@ -33,7 +33,7 @@ jobs:
       - name: Checkout xpressmp813
         uses: actions/checkout@v2
         with:
-          repository: jdarlay/xpressmp813
+          repository: jdarlay/xpressmp813Lin
           path: ./xpressmp813
           ref: master
           token: ${{ secrets.ACCESS_TOKEN }}
@@ -85,11 +85,17 @@ jobs:
         with:
           name: ortools_jar
           path: './or-tools/build/java/ortools-java/target/*.jar'
-      - name: Upload ortools dotnetdlls
+      - name: Upload ortools dotnet
         uses: actions/upload-artifact@v2
         with:
           name: ortools_dotnet
-          path: './or-tools/build/dotnet/**/*.dll'
+          path: |
+            './or-tools/build/dotnet/*.dll'
+            './or-tools/build/dotnet/**/*.dll'
+            './or-tools/build/dotnet/*.nupkg'
+            './or-tools/build/dotnet/*.snupkg'
+            './or-tools/build/dotnet/**/*.nupkg'
+            './or-tools/build/dotnet/**/*.snupkg'
       - name: Run interface unittests
         working-directory: ./or-tools/build
         run: ctest -V -R 'cxx_unittests_*'

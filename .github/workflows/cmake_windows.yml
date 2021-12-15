@@ -28,6 +28,13 @@ jobs:
       - name: Add Sirius bin to path
         shell: bash
         run: echo "${{ github.workspace }}\sirius-solver\SiriusInstall\bin" >> $GITHUB_PATH
+      - name: Checkout xpressmp813Win
+        uses: actions/checkout@v2
+        with:
+          repository: jdarlay/xpressmp813Win
+          path: ./xpressmp813
+          ref: master
+          token: ${{ secrets.ACCESS_TOKEN }}
       - name: Checkout or-tools
         uses: actions/checkout@v2
         with:
@@ -36,10 +43,10 @@ jobs:
           ref: rte_dev_ls_unittest
       - name: Configure or-tools
         working-directory: ./or-tools
-        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake"
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DUSE_XPRESS=ON -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813"
       - name: Build tests
         working-directory: ./or-tools
-        run: cmake --build build --config Release --target sirius_interface -v -- /maxcpucount
+        run: cmake --build build --config Release --target sirius_interface xpress_interface -v -- /maxcpucount
       - name: Upload libortools
         uses: actions/upload-artifact@v2
         with:
@@ -47,4 +54,4 @@ jobs:
           path: ./or-tools/build/RELEASE/bin/ortools.lib
       - name: Run interface tests
         working-directory: ./or-tools/build
-        run: ctest -V -C Release -R 'cxx_unittests_sirius_interface'
+        run: ctest -V -C Release -R 'cxx_unittests_*'

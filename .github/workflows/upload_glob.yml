@@ -1,0 +1,28 @@
+name: Upload glob
+
+on: workflow_dispatch
+
+jobs:
+  cmake:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Sirius repo
+      uses: actions/checkout@v2
+      with:
+        repository: rte-france/sirius-solver
+        path: ./sirius-solver
+        ref: antares_integration
+    - name: Upload 1
+      uses: actions/upload-artifact@v2
+      with:
+        name: upload1
+        path: |
+          ./sirius-solver/**/*.h
+          ./sirius-solver/**/*.c
+    - name: Upload 2
+      uses: actions/upload-artifact@v2
+      with:
+        name: upload2
+        path: |
+          './sirius-solver/**/*.h'
+          './sirius-solver/**/*.c'

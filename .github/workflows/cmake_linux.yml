@@ -53,7 +53,6 @@ jobs:
                 -DUSE_SIRIUS=ON \
                 -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" \
                 -DUSE_XPRESS=ON \
-                -DUSE_XPRESS=ON \
                 -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" \
                 -DBUILD_PYTHON=ON \
                 -DBUILD_JAVA=ON \

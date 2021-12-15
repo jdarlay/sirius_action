@@ -90,10 +90,7 @@ jobs:
         with:
           name: ortools_dotnet
           path: |
-            './or-tools/build/dotnet/*.dll'
             './or-tools/build/dotnet/**/*.dll'
-            './or-tools/build/dotnet/*.nupkg'
-            './or-tools/build/dotnet/*.snupkg'
             './or-tools/build/dotnet/**/*.nupkg'
             './or-tools/build/dotnet/**/*.snupkg'
       - name: Run interface unittests

@@ -12,6 +12,8 @@ jobs:
           python-version: '3.6'
       - name: Pip install reqs
         run: python3 -m pip install --user mypy-protobuf absl-py setuptools wheel numpy pandas virtualenv
+      - name: Add Python binaries to path
+        run: echo "$((Get-Item ~).FullName)/AppData/Roaming/Python/Python36/Scripts" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - name: Checkout Sirius repo
         uses: actions/checkout@v2
         with:

@@ -49,7 +49,7 @@ jobs:
         with:
           repository: jdarlay/or-tools
           path: ./or-tools
-          ref: de81a16e4e
+          ref: de81a16e4eb679bb07b925c99927f2d05225fb32
       - name: Configure or-tools
         working-directory: ./or-tools
         run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DUSE_XPRESS=ON -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" -DBUILD_PYTHON=ON

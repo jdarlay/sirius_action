@@ -17,12 +17,6 @@ jobs:
       with:
         name: upload1
         path: |
+          ./sirius-solver/**/*.nonexistant
           ./sirius-solver/**/*.h
           ./sirius-solver/**/*.c
-    - name: Upload 2
-      uses: actions/upload-artifact@v2
-      with:
-        name: upload2
-        path: |
-          './sirius-solver/**/*.h'
-          './sirius-solver/**/*.c'

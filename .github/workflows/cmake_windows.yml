@@ -87,4 +87,4 @@ jobs:
           XPRESS_BIN_DIR: "${{ github.workspace }}/xpressmp813/bin"
       - name: Run java tests
         working-directory: ./or-tools/build
-        run: ctest -V -R java_java_LinearProgramming
+        run: ctest -V -C Release -R java_java_LinearProgramming

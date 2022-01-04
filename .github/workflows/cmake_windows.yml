@@ -20,8 +20,6 @@ jobs:
           repository: rte-france/sirius-solver
           path: ./sirius-solver
           ref: antares_integration
-      - name: cmake help
-        run: cmake --help
       - name: Configure Sirius
         working-directory: ./sirius-solver
         run: cmake -Ssrc -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=SiriusInstall -G "Visual Studio 16 2019"
@@ -81,21 +79,45 @@ jobs:
             ./or-tools/build/dotnet/**/*.dll
             ./or-tools/build/dotnet/**/*.nupkg
             ./or-tools/build/dotnet/**/*.snupkg
-      - name: Run interface tests
+      - name: Run sirius_interface unittests
+        id: sirius_interface_unittests
+        continue-on-error: true
         working-directory: ./or-tools/build
-        run: ctest -V -C Release -R 'cxx_unittests_*'
+        run: ctest -V -C Release -R 'cxx_unittests_sirius_interface'
+      - name: Run xpress_interface unittests
+        id: xpress_interface_unittests
+        continue-on-error: true
+        working-directory: ./or-tools/build
+        run: ctest -V -C Release -R 'cxx_unittests_xpress_interface'
       - name: Run cpp tests
+        id: cpp_tests
+        continue-on-error: true
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R cxx_cpp_linear_programming
       - name: Run python tests
+        id: python_tests
+        continue-on-error: true
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R python_python_linear_programming_sirius_xpress
         env:
           SIRIUS_BIN_DIR: "${{ github.workspace }}/sirius-solver/SiriusInstall/bin"
           XPRESS_BIN_DIR: "${{ github.workspace }}/xpressmp813/bin"
       - name: Run java tests
+        id: java_tests
+        continue-on-error: true
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R java_java_LinearProgramming
       - name: Run dotnet tests
+        id: dotnet_tests
+        continue-on-error: true
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R dotnet_dotnet_cslinearprogramming
+      - name: Check test results
+        if: |
+          steps.sirius_interface_unittests.outcome != 'success' ||
+          steps.xpress_interface_unittests.outcome != 'success' ||
+          steps.cpp_tests.outcome != 'success' ||
+          steps.python_tests.outcome != 'success' ||
+          steps.java_tests.outcome != 'success' ||
+          steps.dotnet_tests.outcome != 'success'
+        run: exit 1

@@ -121,9 +121,9 @@ jobs:
           echo "python_tests: ${{ steps.python_tests.outcome }}"
           echo "java_tests: ${{ steps.java_tests.outcome }}"
           echo "dotnet_tests: ${{ steps.dotnet_tests.outcome }}"
-          [[ "${{ steps.sirius_interface_unittests.outcome }}" != "success" ||
-             "${{ steps.xpress_interface_unittests.outcome }}" != "success" ||
-             "${{ steps.cpp_tests.outcome }}"                  != "success" ||
-             "${{ steps.python_tests.outcome }}"               != "success" ||
-             "${{ steps.java_tests.outcome }}"                 != "success" ||
-             "${{ steps.dotnet_tests.outcome }}"               != "success" ]]
+          [[ "${{ steps.sirius_interface_unittests.outcome }}" == "success" &&
+             "${{ steps.xpress_interface_unittests.outcome }}" == "success" &&
+             "${{ steps.cpp_tests.outcome }}"                  == "success" &&
+             "${{ steps.python_tests.outcome }}"               == "success" &&
+             "${{ steps.java_tests.outcome }}"                 == "success" &&
+             "${{ steps.dotnet_tests.outcome }}"               == "success" ]]

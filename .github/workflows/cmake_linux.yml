@@ -138,11 +138,16 @@ jobs:
         env:
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
       - name: Check test results
-        if: |
-          steps.sirius_interface_unittests.outcome != 'success' ||
-          steps.xpress_interface_unittests.outcome != 'success' ||
-          steps.cpp_tests.outcome != 'success' ||
-          steps.python_tests.outcome != 'success' ||
-          steps.java_tests.outcome != 'success' ||
-          steps.dotnet_tests.outcome != 'success'
-        run: exit 1
+        run: |
+          echo "sirius_interface_unittests: ${{ steps.sirius_interface_unittests.outcome }}"
+          echo "xpress_interface_unittests: ${{ steps.xpress_interface_unittests.outcome }}"
+          echo "cpp_tests: ${{ steps.cpp_tests.outcome }}"
+          echo "python_tests: ${{ steps.python_tests.outcome }}"
+          echo "java_tests: ${{ steps.java_tests.outcome }}"
+          echo "dotnet_tests: ${{ steps.dotnet_tests.outcome }}"
+          [[ "${{ steps.sirius_interface_unittests.outcome }}" != "success" ||
+             "${{ steps.xpress_interface_unittests.outcome }}" != "success" ||
+             "${{ steps.cpp_tests.outcome }}"                  != "success" ||
+             "${{ steps.python_tests.outcome }}"               != "success" ||
+             "${{ steps.java_tests.outcome }}"                 != "success" ||
+             "${{ steps.dotnet_tests.outcome }}"               != "success" ]]

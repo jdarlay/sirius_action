@@ -68,14 +68,7 @@ jobs:
         working-directory: ./or-tools
         run: |
           cmake --build build \
-                --target linear_programming \
-                         sirius_interface \
-                         xpress_interface \
-                         python_package \
-                         java_package \
-                         java_java_LinearProgramming \
-                         dotnet_package \
-                         dotnet_dotnet_cslinearprogramming \
+                --target ALL_TARGETS \
                 -j14
       - name: Upload libortools
         uses: actions/upload-artifact@v2
@@ -123,7 +116,7 @@ jobs:
       - name: Run python tests
         id: python_tests
         working-directory: ./or-tools/build
-        run: ctest -V -R python_python_linear_programming_sirius_xpress
+        run: ctest -V -R python_python_linear_programming
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
@@ -138,6 +131,34 @@ jobs:
         id: dotnet_tests
         working-directory: ./or-tools/build
         run: ctest -V -R dotnet_dotnet_cslinearprogramming
+        env:
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
+          LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
+      - name: Run other cpp tests
+        id: cpp_tests
+        working-directory: ./or-tools/build
+        run: ctest -V -R -R cxx_cpp -E cxx_cpp_linear_programming
+        env:
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
+          LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
+      - name: Run other python tests
+        id: python_tests
+        working-directory: ./or-tools/build
+        run: ctest -V -R -R python_python -E python_python_linear_programming
+        env:
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
+          LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
+      - name: Run other java tests
+        id: java_tests
+        working-directory: ./or-tools/build
+        run: ctest -V -R -R java_java -E java_java_LinearProgramming
+        env:
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
+          LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
+      - name: Run other dotnet tests
+        id: dotnet_tests
+        working-directory: ./or-tools/build
+        run: ctest -V -R -R dotnet_dotnet -E dotnet_dotnet_cslinearprogramming
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"

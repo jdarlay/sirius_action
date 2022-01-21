@@ -95,37 +95,37 @@ jobs:
         id: sirius_interface_unittests
         working-directory: ./or-tools/build
         env:
-          XPRESS: "${{ github.workspace }}/xpressmp813/"
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R 'cxx_unittests_sirius_interface'
       - name: Run xpress_interface unittests
         id: xpress_interface_unittests
         working-directory: ./or-tools/build
         env:
-          XPRESS: "${{ github.workspace }}/xpressmp813/"
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R 'cxx_unittests_xpress_interface'
       - name: Run cpp tests
         id: cpp_tests
         working-directory: ./or-tools/build
         env:
-          XPRESS: "${{ github.workspace }}/xpressmp813/"
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R cxx_cpp_linear_programming
       - name: Run python tests
         id: python_tests
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R python_python_linear_programming_sirius_xpress
         env:
-          XPRESS: "${{ github.workspace }}/xpressmp813/"
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           SIRIUS_BIN_DIR: "${{ github.workspace }}/sirius-solver/SiriusInstall/bin"
           XPRESS_BIN_DIR: "${{ github.workspace }}/xpressmp813/bin"
       - name: Run java tests
         id: java_tests
         working-directory: ./or-tools/build
         env:
-          XPRESS: "${{ github.workspace }}/xpressmp813/"
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R java_java_LinearProgramming
       - name: Run dotnet tests
         id: dotnet_tests
         working-directory: ./or-tools/build
         env:
-          XPRESS: "${{ github.workspace }}/xpressmp813/"
+          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R dotnet_dotnet_cslinearprogramming

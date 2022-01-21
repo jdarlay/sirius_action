@@ -68,7 +68,7 @@ jobs:
         working-directory: ./or-tools
         run: |
           cmake --build build \
-                --target ALL_TARGETS \
+                --target ALL_BUILD \
                 -j14
       - name: Upload libortools
         uses: actions/upload-artifact@v2

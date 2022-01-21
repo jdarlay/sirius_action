@@ -68,7 +68,7 @@ jobs:
         run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DUSE_XPRESS=ON -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" -DBUILD_PYTHON=ON -DBUILD_JAVA=ON -DBUILD_DOTNET=ON
       - name: Build tests
         working-directory: ./or-tools
-        run: cmake --build build --config Release --target linear_programming sirius_interface xpress_interface python_package java_package java_java_LinearProgramming dotnet_package dotnet_dotnet_cslinearprogramming -v -- /maxcpucount
+        run: cmake --build build --config Release --target ALL_BUILD -v -- /maxcpucount
       - name: Upload libortools
         uses: actions/upload-artifact@v2
         with:

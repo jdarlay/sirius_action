@@ -49,7 +49,7 @@ jobs:
         with:
           repository: jdarlay/or-tools
           path: ./or-tools
-          ref: rte_dev_ls
+          ref: rte_dev_ls_swigmain
       - name: Configure or-tools
         working-directory: ./or-tools
         run: |

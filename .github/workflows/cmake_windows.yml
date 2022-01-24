@@ -101,46 +101,46 @@ jobs:
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R 'cxx_unittests_xpress_interface'
-      - name: Run cpp tests
+      - name: Run specific cpp tests
         working-directory: ./or-tools/build
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R cxx_cpp_linear_programming
-      - name: Run python tests
+      - name: Run specific python tests
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R python_python_linear_programming
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           SIRIUS_BIN_DIR: "${{ github.workspace }}/sirius-solver/SiriusInstall/bin"
           XPRESS_BIN_DIR: "${{ github.workspace }}/xpressmp813/bin"
-      - name: Run java tests
+      - name: Run specific java tests
         working-directory: ./or-tools/build
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R java_java_LinearProgramming
-      - name: Run dotnet tests
+      - name: Run specific dotnet tests
         working-directory: ./or-tools/build
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R dotnet_dotnet_cslinearprogramming
-      - name: Run cpp tests
+      - name: Run other cpp tests
         working-directory: ./or-tools/build
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R cxx_cpp -E cxx_cpp_linear_programming
-      - name: Run python tests
+      - name: Run other python tests
         working-directory: ./or-tools/build
         run: ctest -V -C Release -R python_python -E python_python_linear_programming
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           SIRIUS_BIN_DIR: "${{ github.workspace }}/sirius-solver/SiriusInstall/bin"
           XPRESS_BIN_DIR: "${{ github.workspace }}/xpressmp813/bin"
-      - name: Run java tests
+      - name: Run other java tests
         working-directory: ./or-tools/build
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R java_java -E java_java_LinearProgramming
-      - name: Run dotnet tests
+      - name: Run other dotnet tests
         working-directory: ./or-tools/build
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"

@@ -104,25 +104,25 @@ jobs:
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
-      - name: Run cpp tests
+      - name: Run specific cpp tests
         working-directory: ./or-tools/build
         run: ctest -V -R cxx_cpp_linear_programming
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
-      - name: Run python tests
+      - name: Run specific python tests
         working-directory: ./or-tools/build
         run: ctest -V -R python_python_linear_programming
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
-      - name: Run java tests
+      - name: Run specific java tests
         working-directory: ./or-tools/build
         run: ctest -V -R java_java_LinearProgramming
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
           LD_LIBRARY_PATH: "${{ github.workspace }}/sirius-solver/SiriusInstall/lib/:${{ github.workspace }}/xpressmp813/lib/"
-      - name: Run dotnet tests
+      - name: Run specific dotnet tests
         working-directory: ./or-tools/build
         run: ctest -V -R dotnet_dotnet_cslinearprogramming
         env:

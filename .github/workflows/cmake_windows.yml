@@ -128,13 +128,6 @@ jobs:
         env:
           XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
         run: ctest -V -C Release -R cxx_cpp -E cxx_cpp_linear_programming
-      - name: Run other python tests
-        working-directory: ./or-tools/build
-        run: ctest -V -C Release -R python_python -E python_python_linear_programming
-        env:
-          XPRESS: "${{ github.workspace }}/xpressmp813/bin/"
-          SIRIUS_BIN_DIR: "${{ github.workspace }}/sirius-solver/SiriusInstall/bin"
-          XPRESS_BIN_DIR: "${{ github.workspace }}/xpressmp813/bin"
       - name: Run other java tests
         working-directory: ./or-tools/build
         env:

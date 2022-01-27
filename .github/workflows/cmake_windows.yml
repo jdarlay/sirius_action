@@ -65,15 +65,15 @@ jobs:
           ref: rte_dev_ls
       - name: Configure or-tools
         working-directory: ./or-tools
-        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DUSE_XPRESS=ON -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" -DBUILD_PYTHON=ON -DBUILD_JAVA=ON -DBUILD_DOTNET=ON
+        run: cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="build/install" -G "Visual Studio 16 2019" -DBUILD_DEPS=ON -DUSE_SIRIUS=ON -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" -DUSE_XPRESS=ON -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" -DBUILD_PYTHON=ON -DBUILD_JAVA=ON -DBUILD_DOTNET=ON
       - name: Build tests
         working-directory: ./or-tools
-        run: cmake --build build --config Release --target ALL_BUILD -v -- /maxcpucount
-      - name: Upload libortools
+        run: cmake --build build --config Release --target ALL_BUILD INSTALL -v -- /maxcpucount
+      - name: Upload ortools install
         uses: actions/upload-artifact@v2
         with:
-          name: libortools
-          path: ./or-tools/build/RELEASE/bin/ortools.lib
+          name: ortools_install
+          path: ./or-tools/build/install
       - name: Upload ortools wheel
         uses: actions/upload-artifact@v2
         with:

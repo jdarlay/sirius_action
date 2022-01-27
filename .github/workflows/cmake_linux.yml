@@ -79,16 +79,12 @@ jobs:
           cmake -S. \
                 -Bbuildstatic \
                 -DCMAKE_BUILD_TYPE=Release \
-                -DCMAKE_INSTALL_PREFIX="buildstatic/install" \
                 -DBUILD_SHARED_LIBS=OFF \
                 -DBUILD_DEPS=ON \
                 -DUSE_SIRIUS=ON \
                 -Dsirius_solver_DIR="${{ github.workspace }}/sirius-solver/SiriusInstall/cmake" \
                 -DUSE_XPRESS=ON \
                 -DXPRESS_ROOT="${{ github.workspace }}/xpressmp813" \
-                -DBUILD_PYTHON=ON \
-                -DBUILD_JAVA=ON \
-                -DBUILD_DOTNET=ON
       - name: Build ortools static
         working-directory: ./or-tools
         run: |

@@ -69,11 +69,23 @@ jobs:
       - name: Build tests
         working-directory: ./or-tools
         run: cmake --build build --config Release --target ALL_BUILD INSTALL -v -- /maxcpucount
+      - name: Prepare ortools install
+        working-directory: ./or-tools/build
+        shell: bash
+        run: |
+          mkdir -p install_artifact/cmake
+          mkdir -p install_artifact/lib
+          cp install/lib/cmake/ortools/ortoolsTargets*.cmake install_artifact/cmake
+          cp install/lib/ortools.lib install_artifact/lib
+          cd install
+          find . -type f -wholename './include/ortools/*.h' -exec cp --parents '{}' ../install_artifact \;
+          find . -type f -wholename './include/absl/*.h' -exec cp --parents '{}' ../install_artifact \;
+          find . -type f -wholename './include/google/*.h' -exec cp --parents '{}' ../install_artifact \;
       - name: Upload ortools install
         uses: actions/upload-artifact@v2
         with:
           name: ortools_install
-          path: ./or-tools/build/install
+          path: ./or-tools/build/install_artifact
       - name: Upload ortools wheel
         uses: actions/upload-artifact@v2
         with:

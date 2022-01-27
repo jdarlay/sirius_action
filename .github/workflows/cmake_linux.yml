@@ -89,7 +89,7 @@ jobs:
         working-directory: ./or-tools
         run: |
           cmake --build buildstatic \
-                --target ortools
+                --target ortools \
                 -j14
       - name: Prepare ortools install
         working-directory: ./or-tools/build

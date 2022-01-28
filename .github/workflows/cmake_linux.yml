@@ -96,7 +96,7 @@ jobs:
                 -j14
       - name: Prepare ortools install dyn
         working-directory: ./or-tools/build
-        run: rm -rf install/bin install/share
+        run: rm -rf install/bin install/share install/lib/libortools.so.*
       - name: Upload ortools install dyn
         uses: actions/upload-artifact@v2
         with:

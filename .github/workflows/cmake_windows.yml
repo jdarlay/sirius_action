@@ -72,7 +72,9 @@ jobs:
       - name: Prepare ortools install
         working-directory: ./or-tools/build
         shell: bash
-        run: rm -rf install/bin install/share
+        run: |
+          rm -rf install/bin install/share
+          find install/include -mindepth 1 -maxdepth 1 ! \( -name absl -o -name google -o -name ortools \) -execdir rm -rf '{}' \;
       - name: Upload ortools install
         uses: actions/upload-artifact@v2
         with:

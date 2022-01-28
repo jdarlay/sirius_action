@@ -96,7 +96,9 @@ jobs:
                 -j14
       - name: Prepare ortools install dyn
         working-directory: ./or-tools/build
-        run: rm -rf install/bin install/share install/lib/libortools.so.*
+        run: |
+          rm -rf install/bin install/share install/lib/libortools.so.*
+          find install/include -mindepth 1 -maxdepth 1 ! \( -name absl -o -name google -o -name ortools \) -execdir rm -rf '{}' \;
       - name: Upload ortools install dyn
         uses: actions/upload-artifact@v2
         with:
@@ -104,7 +106,9 @@ jobs:
           path: ./or-tools/build/install
       - name: Prepare ortools install static
         working-directory: ./or-tools/buildstatic
-        run: rm -rf install/bin install/share
+        run: |
+          rm -rf install/bin install/share
+          find install/include -mindepth 1 -maxdepth 1 ! \( -name absl -o -name google -o -name ortools \) -execdir rm -rf '{}' \;
       - name: Upload ortools install dyn
         uses: actions/upload-artifact@v2
         with:

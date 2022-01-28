@@ -72,20 +72,12 @@ jobs:
       - name: Prepare ortools install
         working-directory: ./or-tools/build
         shell: bash
-        run: |
-          mkdir -p install_artifact/cmake
-          mkdir -p install_artifact/lib
-          cp install/lib/cmake/ortools/ortoolsTargets*.cmake install_artifact/cmake
-          cp install/lib/ortools.lib install_artifact/lib
-          cd install
-          find . -type f -wholename './include/ortools/*.h' -exec cp --parents '{}' ../install_artifact \;
-          find . -type f -wholename './include/absl/*.h' -exec cp --parents '{}' ../install_artifact \;
-          find . -type f -wholename './include/google/*.h' -exec cp --parents '{}' ../install_artifact \;
+        run: rm -rf install/bin install/share
       - name: Upload ortools install
         uses: actions/upload-artifact@v2
         with:
           name: ortools_install
-          path: ./or-tools/build/install_artifact
+          path: ./or-tools/build/install
       - name: Upload ortools wheel
         uses: actions/upload-artifact@v2
         with:

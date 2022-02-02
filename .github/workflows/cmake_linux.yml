@@ -95,7 +95,7 @@ jobs:
                          install \
                 -j14
       - name: Prepare ortools install dyn
-        working-directory: ./or-tools/build
+        working-directory: ./or-tools/build/install
         run: find bin -type f ! \( -name 'protoc*' -o -name 'scip' -o -name 'fz' \) -delete
       - name: Upload ortools install dyn
         uses: actions/upload-artifact@v2
@@ -112,7 +112,7 @@ jobs:
           cmake --build build
           ./build/linear_programming
       - name: Prepare ortools install static
-        working-directory: ./or-tools/buildstatic
+        working-directory: ./or-tools/buildstatic/install
         run: find bin -type f ! \( -name 'protoc*' -o -name 'scip' -o -name 'fz' \) -delete
       - name: Upload ortools install static
         uses: actions/upload-artifact@v2
